@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 
 { 
 
-    [SerializeField]private int _maxHealth = 100; 
+   // [SerializeField]private int _maxHealth = 100; 
 
     [SerializeField] private float _movementSpeed = 4.5f;
 
@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     
   [SerializeField] private Transform _groundSensor; 
 
-  `rivate InputAction _pauseAction;
+  private InputAction _pauseAction;
 
     private Rigidbody2D _rigidbody2D; 
 
@@ -34,26 +34,39 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _attackHitBox; 
     [SerializeField] private float _hitBoxRadius = 1f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-   
+    
+    [SerializeField] private AudioClip _jumpSound; 
+    [SerializeField] private AudioClip _attackSound; 
+
+     private AudioSource _playerAudioSource; 
+
+      [SerializeField] private int _maxHealth = 100; 
+       [SerializeField] private int _actualHealth;
    
     void Awake()
     {
          _rigidbody2D = GetComponent <Rigidbody2D>();  
          _animator = GetComponent <Animator>();  
+         _playerAudioSource = GetComponent<AudioSource>();
+
 
          _moveAction = InputSystem.actions["Move"];  
          _jumpAction = InputSystem.actions["Jump"];  
          _attackAction = InputSystem.actions["Attack"];   
-         _pauseAction = InputSystem.actions["Pause"];  
+         _pauseAction = InputSystem.actions["Pause"];   
     }
 
+      void Start()
+    {
+        //_actualHealth = _maxHealth; 
+    }
     // Update is called once per frame
     void Update()
     {
 
           if(_pauseAction.WasPressedThisFrame()) 
         {  
-            GameManager.instace.Pause(); 
+            GameManager.Instance.Pause(); 
         }  
 
         if(GameManager.Instance.IsPaused()) 
@@ -104,11 +117,19 @@ public class PlayerController : MonoBehaviour
     void Jump()
     { 
         _rigidbody2D.AddForce(Vector2.up * Mathf.Sqrt(_jumpHeight * -2 * Physics2D.gravity.y), ForceMode2D.Impulse);  
+       // _playerAudioSource.PlayOneShot(_jumpSound); 
+       PlaySFX(_jumpSound); 
     }  
    
     void Attack()
     { 
         _animator.SetTrigger("IsAttacking");
+
+      //  _playerAudioSource.PlayOneShot(_attackSound); 
+        PlaySFX(_attackSound);
+
+
+
         Collider2D[] colliders2D = Physics2D.OverlapCircleAll(_groundSensor.position, _sensorSize); 
         foreach (Collider2D enemy in colliders2D)
         { 
@@ -134,8 +155,15 @@ public class PlayerController : MonoBehaviour
         }  
         return false; 
 
+   
        
     }
+     void PlaySFX(AudioClip clip) 
+    { 
+       _playerAudioSource.PlayOneShot(clip);     
+    }  
+
+
      void OnDrawGizmos()
         { 
             Gizmos.color = Color.red; 

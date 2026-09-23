@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
   
     void Awake()
     {
-       if(Instace != null && Instance !=this)
+       if(Instance != null && Instance !=this)
         {
             Destroy(gameObject); 
         } 
@@ -36,16 +36,18 @@ public class GameManager : MonoBehaviour
         if(_isPaused) 
         {
             _isPaused = false; 
-            AudioManager 
+            AudioManager.Instance.StartSoundtrack();
             Time.timeScale = 1;
         } 
         else 
         { 
             _isPaused = true; 
+            AudioManager.Instance.PauseSoundtrack();
+
             Time.timeScale = 0;
         }
     } 
-    public bool isPaused() 
+    public bool IsPaused() 
     { 
         return _isPaused;
     }

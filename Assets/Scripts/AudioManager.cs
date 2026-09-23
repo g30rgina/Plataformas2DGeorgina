@@ -5,7 +5,7 @@ public class AudioManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public static AudioManager Instance;  
 
-    private AudioSouce _audioSource 
+    private AudioSource _audioSource;
     [SerializeField]private AudioClip _level1Soundtrack; 
 
     void Awake() 
@@ -19,7 +19,7 @@ public class AudioManager : MonoBehaviour
             Instance = this; 
         }
 
-        _audioSource = GetComponent<>
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public void StartSoundtrack()
@@ -28,8 +28,8 @@ public class AudioManager : MonoBehaviour
         _audioSource.Play(); 
     }
 
-    public void PauseSoundtrack(); 
+    public void PauseSoundtrack()
     {
-        _audioSource.Pause();  
+        _audioSource.Pause();
     }
 }
