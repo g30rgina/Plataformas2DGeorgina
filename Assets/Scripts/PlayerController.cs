@@ -12,7 +12,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float _jumpHeight = 2; 
     
-  [SerializeField] private Transform _groundSensor;
+  [SerializeField] private Transform _groundSensor; 
+
+  `rivate InputAction _pauseAction;
 
     private Rigidbody2D _rigidbody2D; 
 
@@ -41,12 +43,25 @@ public class PlayerController : MonoBehaviour
 
          _moveAction = InputSystem.actions["Move"];  
          _jumpAction = InputSystem.actions["Jump"];  
-         _attackAction = InputSystem.actions["Attack"];  
+         _attackAction = InputSystem.actions["Attack"];   
+         _pauseAction = InputSystem.actions["Pause"];  
     }
 
     // Update is called once per frame
     void Update()
     {
+
+          if(_pauseAction.WasPressedThisFrame()) 
+        {  
+            GameManager.instace.Pause(); 
+        }  
+
+        if(GameManager.Instance.IsPaused()) 
+        {  
+            return; 
+        }  
+
+
         _moveInput = _moveAction.ReadValue<Vector2>(); 
 
         if(_moveInput.x < 0)
@@ -69,6 +84,14 @@ public class PlayerController : MonoBehaviour
         {  
             Jump();
         } 
+
+        if(_attackAction.WasPressedThisFrame() && IsGrounded())
+        {  
+            Attack();
+        }  
+
+      
+
 
         _animator.SetBool("IsJumping", !IsGrounded());
     }
@@ -100,6 +123,7 @@ public class PlayerController : MonoBehaviour
      bool IsGrounded() 
     {  
         Collider2D[] colliders2D = Physics2D.OverlapCircleAll(_groundSensor.position, _sensorSize); 
+        
         foreach (Collider2D item in colliders2D) 
         { 
             if(item.gameObject.layer == 6) 
