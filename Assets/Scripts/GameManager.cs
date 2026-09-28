@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     {
         coins +=1; 
     }  
+
     public void Pause() 
     {
         if(_isPaused) 
@@ -45,7 +46,8 @@ public class GameManager : MonoBehaviour
             AudioManager.Instance.PauseSoundtrack();
 
             Time.timeScale = 0;
-        }
+        } 
+        CanvasManager.Instance.ChangeCanvasStatus();
     } 
     public bool IsPaused() 
     { 
