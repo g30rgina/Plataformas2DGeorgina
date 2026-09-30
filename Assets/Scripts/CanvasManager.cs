@@ -1,13 +1,18 @@
 using UnityEngine;
-
+using UnityEngine.UI;
 public class CanvasManager : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
    
 
     public static CanvasManager Instance; 
-    [SerializeField] private GameObject _pauseCanvas; 
-    {   
+    public  GameObject pauseCanvas;  
+    public Button resumeButton;
+
+    public GameObject gameOverCanvas;  
+    public Button retryButton;
+
+    
       void Awake()
     {  
         if(Instance !=null && Instance !=this) 
@@ -18,16 +23,24 @@ public class CanvasManager : MonoBehaviour
         {
             Instance = this; 
         } 
-    public void ChangeCanvasStatus()
+    } 
 
-        if(_pauseCanvas.activeInHierarchy)
+
+     public void ChangeCanvasStatus(GameObject canvas, Button selectedButton)
+    {
+        if(canvas.activeInHierarchy)
             {  
-                _pauseCanvas.SetActive(true);  
+                canvas.SetActive(false);  
             }
             else 
             {  
-                _pauseCanvas.SetActive(false); 
-            }
-    }
+                canvas.SetActive(true);  
+                 selectedButton.Select();
+            } 
+    } 
+    public void ChangeScene(string sceneName) 
+    {  
+        SceneLoader.Instance.ChangeScene(sceneName);
+    } 
 
 }
