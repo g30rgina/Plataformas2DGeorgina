@@ -235,12 +235,24 @@ PrefabInstance:
       value: Menu Manager
       objectReference: {fileID: 0}
     - target: {fileID: 6108371428402413078, guid: dbd7f90bc9e776d47b81f2091bf90ff8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6108371428402413078, guid: dbd7f90bc9e776d47b81f2091bf90ff8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6108371428402413078, guid: dbd7f90bc9e776d47b81f2091bf90ff8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6108371428402413078, guid: dbd7f90bc9e776d47b81f2091bf90ff8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 51.79874
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6108371428402413078, guid: dbd7f90bc9e776d47b81f2091bf90ff8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.57162
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6108371428402413078, guid: dbd7f90bc9e776d47b81f2091bf90ff8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -252,15 +264,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6108371428402413078, guid: dbd7f90bc9e776d47b81f2091bf90ff8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6108371428402413078, guid: dbd7f90bc9e776d47b81f2091bf90ff8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6108371428402413078, guid: dbd7f90bc9e776d47b81f2091bf90ff8, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6108371428402413078, guid: dbd7f90bc9e776d47b81f2091bf90ff8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -849,7 +861,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9056604, g: 0.2776789, b: 0.2776789, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.754717, g: 0.039159846, b: 0.039159846, a: 1}
     m_SelectedColor: {r: 0.28137785, g: 0.8490566, b: 0.25231397, a: 1}
     m_DisabledColor: {r: 0.38679248, g: 0.34482914, b: 0.34482914, a: 1}
@@ -870,7 +882,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1273949571}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 187998733}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1273949571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1049,9 +1073,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9056604, g: 0.2776789, b: 0.2776789, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 0, g: 1, b: 0.03644663, a: 1}
+    m_SelectedColor: {r: 1, g: 0, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1083,13 +1107,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1733272477}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: 
+      - m_Target: {fileID: 1536882461}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+        m_MethodName: Select
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1299,7 +1323,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9056604, g: 0.2776789, b: 0.2776789, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.754717, g: 0.039159846, b: 0.039159846, a: 1}
     m_SelectedColor: {r: 0.28137785, g: 0.8490566, b: 0.25231397, a: 1}
     m_DisabledColor: {r: 0.38679248, g: 0.34482914, b: 0.34482914, a: 1}
@@ -1909,6 +1933,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1803631344345279618, guid: d110892512728f24c9498a9ba7001e24, type: 3}
+      propertyPath: m_Color.b
+      value: 0.7169812
+      objectReference: {fileID: 0}
+    - target: {fileID: 1803631344345279618, guid: d110892512728f24c9498a9ba7001e24, type: 3}
+      propertyPath: m_Color.g
+      value: 0.7169812
+      objectReference: {fileID: 0}
+    - target: {fileID: 1803631344345279618, guid: d110892512728f24c9498a9ba7001e24, type: 3}
+      propertyPath: m_Color.r
+      value: 0.7169812
+      objectReference: {fileID: 0}
+    - target: {fileID: 1803631344345279618, guid: d110892512728f24c9498a9ba7001e24, type: 3}
+      propertyPath: m_Maskable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3559130903163325213, guid: d110892512728f24c9498a9ba7001e24, type: 3}
       propertyPath: _loadingBar
       value: 
@@ -2005,6 +2045,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8251813955099446116, guid: d110892512728f24c9498a9ba7001e24, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8251813955099446116, guid: d110892512728f24c9498a9ba7001e24, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2015,8 +2063,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 72889321}
-  - {fileID: 215396657}
   - {fileID: 1499213277}
   - {fileID: 1733272478}
   - {fileID: 1021415764}
   - {fileID: 6442272831112275451}
+  - {fileID: 215396657}
