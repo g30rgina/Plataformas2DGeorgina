@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
 
     private bool _isDead = false;
     //------------------------añadido nuevo 
-
+    
 
     private AudioSource _playerAudioSource; 
 
