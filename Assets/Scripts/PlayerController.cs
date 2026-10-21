@@ -12,13 +12,13 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float _jumpHeight = 2; 
     
-  [SerializeField] private Transform _groundSensor; 
+    [SerializeField] private Transform _groundSensor; 
 
-  private InputAction _pauseAction;
+    private InputAction _pauseAction;
 
     private Rigidbody2D _rigidbody2D; 
 
-    private Animator _animator;
+    private Animator _animator; 
 
     private InputAction _moveAction;
 
@@ -32,16 +32,35 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask _groundLayer; 
     [SerializeField] private int _attackDamage = 7;
     [SerializeField] private Transform _attackHitBox; 
-    [SerializeField] private float _hitBoxRadius = 1f;
+    [SerializeField] private float _hitBoxRadius = 1f;  
+
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     
     [SerializeField] private AudioClip _jumpSound; 
-    [SerializeField] private AudioClip _attackSound; 
+    [SerializeField] private AudioClip _attackSound;
+    [SerializeField] private AudioClip _hurtSound;
+    [SerializeField] private AudioClip _deathSound;
 
-     private AudioSource _playerAudioSource; 
+    //------------------------añadido nuevo 
+    [SerializeField] private _invulneableTime = 1f; 
+    private float _invulnerableTimer = 0f;
 
-      [SerializeField] private int _maxHealth = 100; 
-       [SerializeField] private int _actualHealth;
+    //------------------------añadido nuevo 
+    [SerializeField] private _invulneableTime = 1f; 
+    private float _invulnerableTimer = 0f;
+
+    [SerializeField] private float _fallLimit = -10f;
+
+    private bool _isDead = false;
+    //------------------------añadido nuevo 
+
+
+    private AudioSource _playerAudioSource; 
+
+     [SerializeField] private int _maxHealth = 100; 
+     [SerializeField] private int _actualHealth;
    
     void Awake()
     {
@@ -61,6 +80,7 @@ public class PlayerController : MonoBehaviour
         //_actualHealth = _maxHealth; 
     }
     // Update is called once per frame
+
     void Update()
     {
 
@@ -72,8 +92,26 @@ public class PlayerController : MonoBehaviour
         if(GameManager.Instance.IsPaused()) 
         {  
             return; 
-        }  
+        }
 
+        //------------------------añadido nuevo 
+        if (_isDead)
+        {
+            return;
+        }
+
+        if (transform.position.y < _fallLimit)
+        {
+            Die();
+            return;
+        }
+
+        if (_invulnerableTimer > 0)
+        {
+            _invulnerableTimer -= Time.deltaTime;
+        }
+
+         //------------------------añadido nuevo  
 
         _moveInput = _moveAction.ReadValue<Vector2>(); 
 
@@ -129,8 +167,9 @@ public class PlayerController : MonoBehaviour
         PlaySFX(_attackSound);
 
 
-
-        Collider2D[] colliders2D = Physics2D.OverlapCircleAll(_groundSensor.position, _sensorSize); 
+        //------------------------añadido nuevo  
+        Collider2D[] colliders2D = Physics2D.OverlapCircleAll(_attackHitBox.position, _hitBoxRadius);
+        //------------------------añadido nuevo  
         foreach (Collider2D enemy in colliders2D)
         { 
           if(enemy.gameObject.layer == 7)  
@@ -170,12 +209,55 @@ public class PlayerController : MonoBehaviour
        if(_actualHealth > _maxHealth)  
         { 
          _actualHealth = _maxHealth; 
-        }  
-    }  
+        }   
+
+    }
+    //------------------------añadido nuevo  
+    public void TakeDamage(int damage)
+        {
+        if (_isDead || _invulnerableTimer > 0)
+        {
+            return;
+        }
+
+        _actualHealth -= damage;
+        _invulnerableTimer = _invulnerableTime;
+
+        if (_actualHealth <= 0)
+        {
+            Die();
+        }
+        else
+        {
+            PlaySFX(_hurtSound);
+        }
+    }
+
+    void Die()
+    {
+        _isDead = true;
+        _actualHealth = 0;
+        _moveInput = Vector2.zero;
+
+        PlaySFX(_deathSound);
+
+        GameManager.Instance.GameOver();
+    }
+
+    public int GetHealth()
+    {
+        return _actualHealth;
+    }
+
+    public int GetMaxHealth()
+    {
+        return _maxHealth;
+    }
+    //------------------------añadido nuevo  
     
 
 
-     void OnDrawGizmos()
+    void OnDrawGizmos()
         { 
             Gizmos.color = Color.red; 
             Gizmos.DrawWireSphere(_groundSensor.position, _sensorSize);  
