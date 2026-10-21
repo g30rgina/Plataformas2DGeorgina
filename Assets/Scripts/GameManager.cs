@@ -3,55 +3,62 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    public static GameManager Instance;  
+    public static GameManager Instance;
 
-   [SerializeField] private int coins; 
+    [SerializeField] private int coins;
 
-   private bool _isPaused = false; 
+    private bool _isPaused = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-  
+
     void Awake()
     {
-       if(Instance != null && Instance !=this)
+        if (Instance != null && Instance != this)
         {
-            Destroy(gameObject); 
-        } 
-        else 
-        {
-            Instance = this; 
+            Destroy(gameObject);
         }
-    } 
+        else
+        {
+            Instance = this;
+        }
+    }
 
     void Start()
     {
         AudioManager.Instance.StartSoundtrack();
-    }  
+    }
 
-      public void AddCoin() 
+    public void AddCoin()
     {
-        coins +=1; 
-    }  
+        coins += 1;
+    }
 
-    public void Pause() 
+    public void Pause()
     {
-        if(_isPaused) 
+        if (_isPaused)
         {
-            _isPaused = false; 
+            _isPaused = false;
             AudioManager.Instance.StartSoundtrack();
             Time.timeScale = 1;
-        } 
-        else 
-        { 
-            _isPaused = true; 
+        }
+        else
+        {
+            _isPaused = true;
             AudioManager.Instance.PauseSoundtrack();
 
             Time.timeScale = 0;
-        } 
+        }
         CanvasManager.Instance.ChangeCanvasStatus(CanvasManager.Instance.pauseCanvas, CanvasManager.Instance.resumeButton);
-    } 
-    public bool IsPaused() 
-    { 
+    }
+    public bool IsPaused()
+    {
         return _isPaused;
     }
+
+    //---- AÑADIDO ----
+    public void GameOver()
+    {
+        Debug.Log("GAME OVER");
+    }
+    //---- FIN AÑADIDO ----
 
 }
