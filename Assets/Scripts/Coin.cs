@@ -3,43 +3,45 @@ using UnityEngine;
 public class Coin : MonoBehaviour
 {
 
-    private AudioSource _coinAudioSource; 
-    private SpriteRenderer _spriteRenderer; 
-    private CircleCollider2D _collider; 
+    private AudioSource _coinAudioSource;
+    private SpriteRenderer _spriteRenderer;
+    private CircleCollider2D _collider;
 
-    [SerializeField] private AudioClip _coinAudio; 
+    [SerializeField] private AudioClip _coinAudio;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        _coinAudioSource = GetComponent <AudioSource>();   
-        _spriteRenderer = GetComponent <SpriteRenderer>();   
-        _collider = GetComponent <CircleCollider2D>();   
-    } 
+        _coinAudioSource = GetComponent<AudioSource>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _collider = GetComponent<CircleCollider2D>();
+    }
 
-    void PlaySFX() 
+    void PlaySFX()
     {
-        _coinAudioSource.PlayOneShot (_coinAudio);  
-    } 
+        // ____cambiado (antes: _coinAudioSource.PlayOneShot (_coinAudio);)
+        AudioManager.Instance.PlaySFX(_coinAudio);
+        // ______finalizado
+    }
 
 
     // Update is called once per frame
     void Update()
     {
-        
-    } 
-  
-void OnTriggerEnter2D(Collider2D collision)
-{
-    if(collision.gameObject.CompareTag("Player"))
 
-    { 
-        GameManager.Instance.AddCoin();
-        PlaySFX();  
-        _spriteRenderer.enabled = false; 
-        _collider.enabled = false; 
-        Destroy(gameObject, 0.5f); 
-    } 
-} 
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+
+        {
+            GameManager.Instance.AddCoin();
+            PlaySFX();
+            _spriteRenderer.enabled = false;
+            _collider.enabled = false;
+            Destroy(gameObject, 0.5f);
+        }
+    }
 
 }

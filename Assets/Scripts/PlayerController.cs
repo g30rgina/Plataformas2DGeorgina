@@ -56,6 +56,11 @@ public class PlayerController : MonoBehaviour
     private bool _isDead = false;
     //---- FIN AÑADIDO ----
 
+    // ____añadido
+    [SerializeField] private float _attackLockTime = 0.4f;
+    private float _attackLockTimer = 0f;
+    // ______finalizado
+
     private AudioSource _playerAudioSource;
 
     [SerializeField] private int _maxHealth = 100;
@@ -79,6 +84,10 @@ public class PlayerController : MonoBehaviour
         //---- CAMBIADO ---- (antes tenía // delante)
         _actualHealth = _maxHealth;
         //---- FIN CAMBIADO ----
+
+        // ____añadido
+        GameManager.Instance.UpdateHealthUI(_actualHealth, _maxHealth);
+        // ______finalizado
     }
 
     void Update()
@@ -118,6 +127,14 @@ public class PlayerController : MonoBehaviour
 
 
         _moveInput = _moveAction.ReadValue<Vector2>();
+
+        // ____añadido
+        if (_attackLockTimer > 0)
+        {
+            _attackLockTimer -= Time.deltaTime;
+            _moveInput = Vector2.zero;
+        }
+        // ______finalizado
 
         if (_moveInput.x < 0)
         {
@@ -165,6 +182,13 @@ public class PlayerController : MonoBehaviour
     {
         _animator.SetTrigger("IsAttacking");
 
+        // ____añadido
+        if (_moveInput.x == 0)
+        {
+            _attackLockTimer = _attackLockTime;
+        }
+        // ______finalizado
+
         //  _playerAudioSource.PlayOneShot(_attackSound); 
         PlaySFX(_attackSound);
 
@@ -199,7 +223,9 @@ public class PlayerController : MonoBehaviour
 
     void PlaySFX(AudioClip clip)
     {
-        _playerAudioSource.PlayOneShot(clip);
+        // ____cambiado (antes: _playerAudioSource.PlayOneShot(clip);)
+        AudioManager.Instance.PlaySFX(clip);
+        // ______finalizado
     }
 
     public void AddHealth(int healAmount)
@@ -210,6 +236,10 @@ public class PlayerController : MonoBehaviour
         {
             _actualHealth = _maxHealth;
         }
+
+        // ____añadido
+        GameManager.Instance.UpdateHealthUI(_actualHealth, _maxHealth);
+        // ______finalizado
     }
 
     //---- AÑADIDO ----
@@ -222,6 +252,10 @@ public class PlayerController : MonoBehaviour
 
         _actualHealth -= damage;
         _invulnerableTimer = _invulnerableTime;
+
+        // ____añadido
+        GameManager.Instance.UpdateHealthUI(_actualHealth, _maxHealth);
+        // ______finalizado
 
         if (_actualHealth <= 0)
         {
@@ -240,6 +274,10 @@ public class PlayerController : MonoBehaviour
         _isDead = true;
         _actualHealth = 0;
         _moveInput = Vector2.zero;
+
+        // ____añadido
+        GameManager.Instance.UpdateHealthUI(_actualHealth, _maxHealth);
+        // ______finalizado
 
         PlaySFX(_deathSound);
 

@@ -4,60 +4,58 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SceneLoader : MonoBehaviour
-{ 
+{
     public static SceneLoader Instance;
-    
+
     [SerializeField] private GameObject _loadingCanvas;
     [SerializeField] private Image _loadingBar;
-    void Awake() 
+    void Awake()
     {
-        if(Instance !=null && Instance !=this)
-        { 
-            Destroy(gameObject); 
-        } 
-        else 
-        {  
-          Instance = this;   
-        } 
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
         DontDestroyOnLoad(gameObject);
 
-    } 
+    }
 
 
     public void ChangeScene(string sceneName)
-    { 
+    {
         StartCoroutine(LoadNewScene(sceneName));
     }
     IEnumerator LoadNewScene(string sceneName)
-    {  
-        yield return null; 
+    {
+        yield return null;
 
-        _loadingCanvas.SetActive(true); 
+        _loadingCanvas.SetActive(true);
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName); 
-        asyncLoad.allowSceneActivation = false; 
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        asyncLoad.allowSceneActivation = false;
 
         float fakeLoadPercentaje = 0;
-        while(!asyncLoad.isDone) 
-        { 
-        // _loadingBar.fillAmount = asyncLoad.progress;
-        fakeLoadPercentaje += 0.01f; 
-        Mathf.Clamp01(fakeLoadPercentaje);  
+        while (!asyncLoad.isDone)
+        {
+            // _loadingBar.fillAmount = asyncLoad.progress;
+            // ____cambiado (antes: fakeLoadPercentaje += 0.01f; tardaba unos 10 segundos)
+            fakeLoadPercentaje += 0.05f;
+            // ______finalizado
+            Mathf.Clamp01(fakeLoadPercentaje);
 
-        _loadingBar.fillAmount = fakeLoadPercentaje; 
+            _loadingBar.fillAmount = fakeLoadPercentaje;
 
-        if(asyncLoad.progress >= 0.9f && fakeLoadPercentaje>= 0.99f)
-        { 
-            asyncLoad.allowSceneActivation = true; 
+            if (asyncLoad.progress >= 0.9f && fakeLoadPercentaje >= 0.99f)
+            {
+                asyncLoad.allowSceneActivation = true;
+            }
+            yield return new WaitForSecondsRealtime(0.1f);
         }
-        yield return new WaitForSecondsRealtime(0.1f);
-        } 
-        Time.timeScale = 1; 
+        Time.timeScale = 1;
         _loadingCanvas.SetActive(false);
     }
 
-
-
-
 }
-
